@@ -1,0 +1,46 @@
+﻿<div>
+    <ejs-documenteditorcontainer id="container" height="580px"></ejs-documenteditorcontainer>
+</div>
+<script>
+    var documenteditor;
+    document.addEventListener('DOMContentLoaded', function () {
+        var documenteditorElement = document.getElementById("container");
+        documenteditor = documenteditorElement.ej2_instances[0];
+        documenteditor.resize();
+        function loadDocument(actionName) {
+            var ajax = new XMLHttpRequest();
+            ajax.open('GET', '/Home/' + actionName, true);
+            ajax.responseType = 'text';
+            ajax.onreadystatechange = function () {
+                if (ajax.readyState === 4 && (ajax.status === 200 || ajax.status === 304)) {
+                    documenteditor.documentEditor.open(ajax.response);
+                }
+            };
+            ajax.send();
+        }
+        document.getElementById("btnDecrypt").addEventListener("click", function () {
+            loadDocument("DecryptDocument");
+        });
+        document.getElementById("btnAllowComments").addEventListener("click", function () {
+            loadDocument("AllowEditingCommentsOnly");
+        });
+        document.getElementById("btnAllowFormFields").addEventListener("click", function () {
+            loadDocument("AllowEditingFormFieldsOnly");
+        });
+        document.getElementById("btnAllowRevisions").addEventListener("click", function () {
+            loadDocument("AllowRevisionOnly");
+        });
+        document.getElementById("btnAllowReading").addEventListener("click", function () {
+            loadDocument("AllowOnlyReading");
+        });
+        document.getElementById("btnRemoveProtection").addEventListener("click", function () {
+            loadDocument("RemoveProtection");
+        });
+        document.getElementById("btnAddEditableRange").addEventListener("click", function () {
+            loadDocument("AddEditableRange");
+        });
+        document.getElementById("btnRemoveEditableRange").addEventListener("click", function () {
+            loadDocument("RemoveEditableRange");
+        });
+    });
+</script>
